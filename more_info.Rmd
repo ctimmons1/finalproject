@@ -63,6 +63,15 @@ pipeline_operators <- pipeline_spills %>%
   filter(n_spills > 5) %>%
   inner_join(pipeline_spills, by = "Operator_General") 
 
+ggplot(data = pipeline_operators, mapping = aes(x = Barrels_Gallons, y = Environmental_Remediation_Costs)) +
+  geom_jitter(width = 1, height = 1, alpha = 0.5) +
+  geom_smooth(method = lm) +
+  scale_y_log10() +
+  scale_x_log10() +
+  labs(title = "Correlation between amount of oil spillage and cost to the environment", subtitle = "Gallons of oil released in each pipeline spill versus the environmental remediation costs of the spill. 
+Regression line demonstrates positive trend.", x = "Oil Released (Gallons)", y = "Environmental Remediation Costs ($)")
+
+
 ggplot(data = pipeline_operators, mapping = aes(x = Environmental_Remediation_Costs, fill = Cause_Category)) +
   geom_histogram(colour = "black") +
   scale_color_discrete(guide = FALSE) +
@@ -109,12 +118,12 @@ pipeline_spills_sf <- pipeline_spills %>%
 ggplot() +
   geom_sf(data = USA_sf) +
   geom_sf(data = pollution, aes(fill = mean_NO2)) +
-  scale_fill_continuous(low = "yellow", high = "darkred", 
+  scale_fill_continuous(low = "orange", high = "darkred", 
                         space = "Lab", na.value = "white",         
                         guide = "colourbar", aesthetics = "fill") +
   geom_sf(data = pipeline_spills_sf, size = 0.5, col = "blue") +
   coord_sf(crs = 4326) +
   labs(title = "Relationship Between Pollution Levels and Pipeline Spills", 
-       subtitle = "Mean nitrogen dioxide release by county from 2000-2016, plotted against occurrances of oil pipeline spills from 2010-present", x = "Longitude", y = "Latitude", fill = "Mean NO2 Release (Parts Per Billion")
+       subtitle = "Mean nitrogen dioxide release by county from 2000-2016, plotted against occurrances of oil pipeline spills from 2010-present", x = "Longitude", y = "Latitude", fill = "Mean NO2 Release (Parts Per Billion)")
 
 ```

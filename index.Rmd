@@ -46,7 +46,7 @@ USA_sf <- maps::map("state", plot = FALSE, fill = TRUE) %>%
   select(-ID)
 
 
-pipeline_spills <- pipeline_spills <- read_excel("database.xlsx") %>%
+pipeline_spills <- read_excel("database.xlsx") %>%
   unite(col = "Accident_Location", c("Accident_City", "Accident_State"), sep = ", ", remove = FALSE) %>%
   mutate("State_ID" = Accident_State, "Barrels_Gallons" = Unintentional_Release_Barrels*42) %>%
   separate(col = Operator_Name, into = c("Operator_General"), sep = " ", remove = FALSE, convert = FALSE, 
